@@ -1,6 +1,7 @@
 -- Set mapleader and maplocalleader
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+vim.opt.swapfile = false
 
 -- Set options using Lua style
 vim.opt.expandtab = true
