@@ -26,8 +26,27 @@ return {
 				buf_map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 			end
 
-			lspconfig.ts_ls.setup({
+			lspconfig.lua_ls.setup({
 				on_attach = on_attach,
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {
+							library = {
+								vim.env.VIMRUNTIME,
+							},
+							checkThirdParty = false,
+						},
+					},
+				},
+			})
+
+			lspconfig.ts_ls.setup({
+				on_attach = function(client, bufnr)
+					client.server_capabilities.documentFormattingProvider = false
+				end,
 				filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
 				cmd = { "typescript-language-server", "--stdio" },
 			})
@@ -38,17 +57,6 @@ return {
 
 			lspconfig.tailwindcss.setup({
 				on_attach = on_attach,
-			})
-
-			lspconfig.lua_ls.setup({
-				on_attach = on_attach,
-				settings = {
-					Lua = {
-						diagnostics = {
-							globals = { "vim" },
-						},
-					},
-				},
 			})
 		end,
 	},
