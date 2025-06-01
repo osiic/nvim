@@ -1,14 +1,11 @@
--- none-ls.lua
 return {
   "nvimtools/none-ls.nvim",
   dependencies = {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    "nvim-lua/plenary.nvim",
   },
-  event = "VeryLazy",
   config = function()
     local null_ls = require("null-ls")
 
-    -- null-ls setup, pakai eslint (bukan eslint_d)
     null_ls.setup({
       sources = {
         null_ls.builtins.formatting.prettierd,
@@ -18,8 +15,9 @@ return {
       },
       on_attach = function(client, bufnr)
         if client.supports_method("textDocument/formatting") then
-          -- auto format & fix on save
+          vim.api.nvim_clear_autocmds({ group = "LspFormatting", buffer = bufnr })
           vim.api.nvim_create_autocmd("BufWritePre", {
+            group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),
             buffer = bufnr,
             callback = function()
               vim.lsp.buf.format({ bufnr = bufnr })
@@ -30,3 +28,4 @@ return {
     })
   end,
 }
+
