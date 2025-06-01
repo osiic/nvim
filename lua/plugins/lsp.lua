@@ -5,8 +5,9 @@ return {
 			local lspconfig = require("lspconfig")
 
 			local on_attach = function(client, bufnr)
-				local buf_map = function(mode, lhs, rhs)
-					vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, { noremap = true, silent = true })
+				local buf_map = function(mode, lhs, rhs, opts)
+					opts = opts or { noremap = true, silent = true }
+					vim.keymap.set(mode, lhs, rhs, opts)
 				end
 
 				-- Mappings
@@ -17,10 +18,10 @@ return {
 				buf_map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
 				buf_map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
 				buf_map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
-				buf_map("n", "<leader>f", function()
+				buf_map("n", "gf", function()
 					vim.lsp.buf.format({ async = true })
 				end, { desc = "Format buffer" })
-				buf_map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostics" })
+				buf_map("n", "ge", vim.diagnostic.open_float, { desc = "Show diagnostics" })
 				buf_map("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
 				buf_map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 			end

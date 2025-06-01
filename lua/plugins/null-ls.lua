@@ -2,6 +2,7 @@ return {
 	"nvimtools/none-ls.nvim",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
+		"nvimtools/none-ls-extras.nvim",
 	},
 	config = function()
 		local null_ls = require("null-ls")
@@ -10,11 +11,11 @@ return {
 			sources = {
 				null_ls.builtins.formatting.prettierd,
 				null_ls.builtins.formatting.stylua,
-				null_ls.builtins.diagnostics.eslint,
-				null_ls.builtins.code_actions.eslint,
+				require("none-ls.diagnostics.eslint"),
+				require("none-ls.code_actions.eslint"),
 			},
 			on_attach = function(client, bufnr)
-				if client.supports_method("textDocument/formatting") then
+				if client:supports_method("textDocument/formatting") then
 					local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 					vim.api.nvim_clear_autocmds({
