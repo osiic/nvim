@@ -1,14 +1,5 @@
--- LSP
--- Mason = tempat dowload package nya
--- Moson LSP Config = auto dowload pakage nya
--- Nvim LSP Config = ngatur pakage nya
--- "jay-babu/mason-null-ls.nvim",
+-- lsp-config.lua
 return {
-  {
-    "jay-babu/mason-null-ls.nvim",
-    lazy = true,
-    dependencies = { "williamboman/mason.nvim", "nvimtools/none-ls.nvim" },
-  },
   {
     "williamboman/mason.nvim",
     config = function()
@@ -19,7 +10,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "tsserver", "tailwindcss", "eslint" },
+        ensure_installed = { "lua_ls", "tsserver",  "tailwindcss", "eslint" },
         automatic_installation = true,
       })
     end,
@@ -27,11 +18,14 @@ return {
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     config = function()
-      require('mason-tool-installer').setup {
+      require("mason-tool-installer").setup {
         ensure_installed = {
-          'prettierd',
+          "prettierd",
+          "eslint_d", -- install binary eslint_d, tapi null-ls tetap pakai eslint
+          "stylua",
         },
         auto_update = false,
+        run_on_start = true, -- langsung install saat startup nvim
       }
     end,
   },
@@ -52,7 +46,7 @@ return {
         },
       })
 
-      -- Keymap
+      -- Keymap LSP biasa
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
       vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
