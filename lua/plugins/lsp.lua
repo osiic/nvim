@@ -1,44 +1,54 @@
 return {
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      local lspconfig = require("lspconfig")
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			local lspconfig = require("lspconfig")
 
-      local on_attach = function(client, bufnr)
-        local buf_map = function(mode, lhs, rhs)
-          vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, { noremap = true, silent = true })
-        end
+			local on_attach = function(client, bufnr)
+				local buf_map = function(mode, lhs, rhs)
+					vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, { noremap = true, silent = true })
+				end
 
-        buf_map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-        buf_map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-        buf_map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-        buf_map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-      end
+				-- Mappings
+				buf_map("n", "K", vim.lsp.buf.hover, { desc = "Show documentation" })
+				buf_map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+				buf_map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+				buf_map("n", "gr", vim.lsp.buf.references, { desc = "Show references" })
+				buf_map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+				buf_map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+				buf_map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
+				buf_map("n", "<leader>f", function()
+					vim.lsp.buf.format({ async = true })
+				end, { desc = "Format buffer" })
+				buf_map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostics" })
+				buf_map("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+				buf_map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+			end
 
-      lspconfig.ts_ls.setup({
-        on_attach = on_attach,
-        filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-        cmd = { "typescript-language-server", "--stdio" },
-      })
+			lspconfig.ts_ls.setup({
+				on_attach = on_attach,
+				filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+				cmd = { "typescript-language-server", "--stdio" },
+			})
 
-      lspconfig.eslint.setup({
-        on_attach = on_attach,
-      })
+			lspconfig.eslint.setup({
+				on_attach = on_attach,
+			})
 
-      lspconfig.tailwindcss.setup({
-        on_attach = on_attach,
-      })
+			lspconfig.tailwindcss.setup({
+				on_attach = on_attach,
+			})
 
-      lspconfig.lua_ls.setup({
-        on_attach = on_attach,
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim" },
-            },
-          },
-        },
-      })
-    end,
-  },
+			lspconfig.lua_ls.setup({
+				on_attach = on_attach,
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = { "vim" },
+						},
+					},
+				},
+			})
+		end,
+	},
 }
