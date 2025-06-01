@@ -2,7 +2,13 @@
 -- Mason = tempat dowload package nya
 -- Moson LSP Config = auto dowload pakage nya
 -- Nvim LSP Config = ngatur pakage nya
+-- "jay-babu/mason-null-ls.nvim",
 return {
+  {
+    "jay-babu/mason-null-ls.nvim",
+    lazy = true,
+    dependencies = { "williamboman/mason.nvim", "nvimtools/none-ls.nvim" },
+  },
   {
     "williamboman/mason.nvim",
     config = function()
