@@ -9,7 +9,8 @@
       "path": [ "?.lua", "?/init.lua" ]
     },
     "diagnostics": {
-      "globals": ["vim"]
+      "globals": ["vim",
+                "linter"]
     },
     "workspace": {
       "library": [
