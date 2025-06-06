@@ -20,8 +20,10 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local base_on_attach = require("lspconfig").util.default_config.on_attach
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       vim.lsp.config("lua_ls", {
+        capabilities = capabilities,
         settings = {
           Lua = {
             diagnostics = {
@@ -39,6 +41,7 @@ return {
       })
 
       vim.lsp.config("ts_ls", {
+        capabilities = capabilities,
         init_options = {
           plugins = {
             {
@@ -56,6 +59,7 @@ return {
       })
 
       vim.lsp.config("eslint", {
+        capabilities = capabilities,
         on_attach = function(client, bufnr)
           if not base_on_attach then
             return
@@ -69,7 +73,7 @@ return {
         end,
       })
 
-      vim.lsp.enable("tailwindcss")
+      vim.lsp.config("tailwindcss", { capabilities = capabilities })
     end,
   },
 }
