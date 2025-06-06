@@ -1,11 +1,12 @@
+-- plugins/lsp.lua
 return {
-	-- Mason (Package Manager untuk LSP, DAP, Linter, Formatter)
 	{
 		"williamboman/mason.nvim",
 		cmd = "Mason",
 		build = ":MasonUpdate",
 		opts = {
 			ui = {
+				border = "rounded",
 				icons = {
 					package_installed = "✓",
 					package_pending = "➜",
@@ -15,73 +16,121 @@ return {
 		},
 	},
 
-	-- Mason LSP Config
 	{
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = { "williamboman/mason.nvim" },
 		config = function()
 			require("mason-lspconfig").setup({
 				ensure_installed = {
-					"ts_ls", -- JavaScript/TypeScript
-					"html", -- HTML
-					"cssls", -- CSS
-					"tailwindcss", -- Tailwind
-					"intelephense", -- PHP/Laravel
-					"emmet_ls", -- Emmet
-					"lua_ls", -- Lua
-					-- Uncomment jika butuh:
-					-- "jdtls",     -- Java
-					-- "pyright",   -- Python
+					"ts_ls",
+					"html",
+					"cssls",
+					"tailwindcss",
+					"intelephense",
+					"emmet_ls",
+					"lua_ls",
+					"jsonls",
+					"yamlls",
 				},
 				automatic_installation = true,
 			})
 		end,
 	},
 
-	-- LSP Config
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
 			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"L3MON4D3/LuaSnip", -- kalau kamu pakai snippet
-			"hrsh7th/nvim-cmp",
-			"hrsh7th/cmp-nvim-lsp",
+			"ray-x/lsp_signature.nvim",
 		},
 		config = function()
 			local lspconfig = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local on_attach = require("core.lsp").on_attach
 
-			-- Setup untuk masing-masing LSP
-			for _, server in ipairs({
+			-- Common LSP servers
+			local servers = {
 				"ts_ls",
 				"html",
 				"cssls",
 				"tailwindcss",
 				"intelephense",
 				"emmet_ls",
-				"lua_ls",
-			}) do
+				"jsonls",
+				"yamlls",
+			}
+
+			for _, server in ipairs(servers) do
 				lspconfig[server].setup({
 					capabilities = capabilities,
+					on_attach = on_attach,
 				})
 			end
 
-			-- Khusus Lua
+			-- Special configuration for Lua
 			lspconfig.lua_ls.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
 				settings = {
 					Lua = {
-						diagnostics = {
-							globals = { "vim" },
-						},
+						runtime = { version = "LuaJIT" },
+						diagnostics = { globals = { "vim" } },
 						workspace = {
 							checkThirdParty = false,
+							library = vim.api.nvim_get_runtime_file("", true),
 						},
+						telemetry = { enable = false },
 					},
+				},
+			})
+
+			-- Enhanced LSP UI
+			require("lsp_signature").setup({
+				bind = true,
+				handler_opts = { border = "rounded" },
+				hint_enable = false,
+			})
+		end,
+	},
+
+	{
+		"stevearc/conform.nvim",
+		event = { "BufWritePre" },
+		config = function()
+			require("conform").setup({
+				formatters_by_ft = {
+					javascript = { "prettier" },
+					typescript = { "prettier" },
+					javascriptreact = { "prettier" },
+					typescriptreact = { "prettier" },
+					php = { "php_cs_fixer" },
+					lua = { "stylua" },
+					json = { "prettier" },
+					yaml = { "prettier" },
+					html = { "prettier" },
+					css = { "prettier" },
+					markdown = { "prettier" },
+				},
+				format_on_save = {
+					timeout_ms = 1500,
+					lsp_fallback = true,
+				},
+			})
+		end,
+	},
+
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		config = function()
+			require("mason-tool-installer").setup({
+				ensure_installed = {
+					"prettier",
+					"stylua",
+					"php-cs-fixer",
+					"eslint_d",
+					"typescript-language-server",
 				},
 			})
 		end,
