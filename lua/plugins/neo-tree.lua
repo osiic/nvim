@@ -67,10 +67,10 @@ return {
 		-- Keymaps
 		vim.keymap.set(
 			"n",
-			"<leader>ee",
+			"<leader>e",
 			":Neotree filesystem toggle right<CR>",
 			{ desc = "Toggle Neo-tree (filesystem)" }
 		)
-		vim.keymap.set("n", "<leader>eg", ":Neotree git_status toggle<CR>", { desc = "Toggle Neo-tree (Git status)" })
+		vim.keymap.set("n", "<leader>ge", ":Neotree git_status toggle<CR>", { desc = "Toggle Neo-tree (Git status)" })
 	end,
 }
