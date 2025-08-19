@@ -35,9 +35,7 @@ vim.opt.autowrite = true
 vim.opt.backspace = { "indent", "eol", "start" } -- "2" sudah deprecated
 
 -- Clipboard
-vim.schedule(function()
-	vim.opt.clipboard = "unnamedplus"
-end)
+vim.opt.clipboard = "unnamedplus"
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
