@@ -18,9 +18,6 @@ vim.keymap.set('n', '<leader>v', function()
   vim.opt.paste = false
 end, { desc = "Paste from clipboard safely" })
 
--- Reload config
-keymap.set("n", "<leader>r", ":source ~/.config/nvim/init.lua<CR>")
-
 -- Pindah buffer
 keymap.set("n", "<S-l>", ":bnext<CR>")
 keymap.set("n", "<S-h>", ":bprev<CR>")
