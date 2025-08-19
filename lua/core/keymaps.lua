@@ -11,6 +11,13 @@ keymap.set("n", "<leader>q", ":q<CR>")
 -- Clear highlight search dengan ESC
 keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
+-- Paste aman dari Windows clipboard
+vim.keymap.set('n', '<leader>v', function()
+  vim.opt.paste = true
+  vim.cmd([[normal! "+p]])
+  vim.opt.paste = false
+end, { desc = "Paste from clipboard safely" })
+
 -- Reload config
 keymap.set("n", "<leader>r", ":source ~/.config/nvim/init.lua<CR>")
 
