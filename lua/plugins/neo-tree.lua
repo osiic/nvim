@@ -51,7 +51,7 @@ return {
 			filesystem = {
 				use_libuv_file_watcher = true, -- Auto-refresh saat ada perubahan file
 				async_directory_scan = "auto", -- atau "always"
-				scan_mode = "limited",
+				scan_mode = "shallow",
 				filtered_items = {
 					visible = true, -- Show hidden files by default
 					hide_dotfiles = false, -- Show dotfiles (e.g., .gitignore)
