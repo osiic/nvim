@@ -16,6 +16,7 @@ vim.keymap.set('n', '<leader>v', function()
   vim.opt.paste = true
   vim.cmd([[normal! "+p]])
   vim.opt.paste = false
+  vim.cmd([[%s/\r//g]])
 end, { desc = "Paste from clipboard safely" })
 
 -- Pindah buffer
