@@ -45,3 +45,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.hl.on_yank()
 	end,
 })
+
+vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile"}, {
+  pattern = "*",
+  callback = function()
+    -- hapus semua CR (carriage return) otomatis
+    vim.cmd([[ %s/\r//g ]])
+  end,
+})
