@@ -17,7 +17,7 @@
         ];
 
         # Ambil langsung init.lua / init.vim dari repo ini
-        extraLuaConfig = builtins.readFile ./.config/nvim/init.lua;
+        extraLuaConfig = builtins.readFile ./init.lua;
       };
     };
   };
