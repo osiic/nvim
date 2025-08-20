@@ -43,11 +43,6 @@ return {
       vim.lsp.config("ts_ls", {
         capabilities = capabilities,
       })
-
-      vim.lsp.config("nil_ls", {
-        capabilities = capabilities,
-      })
-
       vim.lsp.config("eslint", {
         capabilities = capabilities,
       })

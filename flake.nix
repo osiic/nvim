@@ -12,10 +12,8 @@
         # Bisa tambahin plugin langsung dari nixpkgs juga
         plugins = with pkgs.vimPlugins; [
           vim-nix
-          nil_ls
           telescope-nvim
           nvim-treesitter
-          nixpkgs-fmt
         ];
 
         # Ambil langsung init.lua / init.vim dari repo ini
