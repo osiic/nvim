@@ -12,7 +12,7 @@
         # Bisa tambahin plugin langsung dari nixpkgs juga
         plugins = with pkgs.vimPlugins; [
           vim-nix
-          nil
+          nil_ls
           telescope-nvim
           nvim-treesitter
           nixpkgs-fmt
