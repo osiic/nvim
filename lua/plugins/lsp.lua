@@ -10,7 +10,7 @@ return {
     "mason-org/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "ts_ls", "eslint", "tailwindcss" },
+        ensure_installed = { "lua_ls", "nil_ls", "ts_ls", "eslint", "tailwindcss" },
         automatic_installation = true,
       })
     end,
@@ -41,6 +41,10 @@ return {
       })
 
       vim.lsp.config("ts_ls", {
+        capabilities = capabilities,
+      })
+
+      vim.lsp.config("nil_ls", {
         capabilities = capabilities,
       })
 
