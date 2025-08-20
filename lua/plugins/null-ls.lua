@@ -10,7 +10,6 @@ return {
           "dotenv-linter",
           "rustywind",
           "stylelint",
-          "nixpkgs-fmt",
         },
         automatic_installation = true,
       })
