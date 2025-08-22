@@ -13,9 +13,6 @@ keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Paste aman dari Windows clipboard
 vim.keymap.set('n', '<leader>v', function()
-  vim.opt.paste = true
-  vim.cmd([[normal! "+p]])
-  vim.opt.paste = false
   vim.cmd([[%s/\r//g]])
 end, { desc = "Paste from clipboard safely" })
 
